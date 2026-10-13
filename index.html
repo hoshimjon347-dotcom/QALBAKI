@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortune Win - Mukammal Skam Simulyator</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: #0b0e17; color: #fff; padding: 10px; }
+        .main-container { max-width: 500px; margin: 0 auto; background: #131926; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.7); border: 1px solid #232c45; }
+        
+        /* Header */
+        .header { background: #1a2238; padding: 15px; border-bottom: 2px solid #ffaa00; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 20px; font-weight: bold; color: #ffaa00; }
+        .balance-badge { background: #0b0e17; padding: 8px 14px; border-radius: 20px; border: 1px solid #00ff66; color: #00ff66; font-weight: bold; font-size: 15px; }
+        
+        /* VIP & Bonus Banner */
+        .vip-banner { background: linear-gradient(90deg, #d4af37, #8a6f27); padding: 10px; text-align: center; font-size: 13px; font-weight: bold; color: #000; }
+        .bonus-info { background: #1e2942; padding: 10px; text-align: center; font-size: 12px; color: #ffaa00; border-bottom: 1px solid #232c45; }
+
+        /* Menu Tabs */
+        .tabs { display: flex; background: #161d2f; border-bottom: 1px solid #232c45; }
+        .tab { flex: 1; padding: 12px; text-align: center; font-size: 12px; font-weight: bold; color: #8fa0c2; cursor: pointer; }
+        .tab.active { color: #ffaa00; border-bottom: 2px solid #ffaa00; background: #1a2238; }
+
+        /* Content Sections */
+        .section { padding: 15px; display: none; }
+        .section.active { display: block; }
+
+        /* Grid Layouts */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .card { background: #1c263b; border-radius: 8px; border: 1px solid #283754; overflow: hidden; text-align: center; cursor: pointer; transition: 0.2s; position: relative; }
+        .card:hover { border-color: #ffaa00; transform: translateY(-2px); }
+        .card-img { width: 100%; height: 95px; background: #232c45; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .card-title { padding: 8px; font-size: 12px; font-weight: bold; }
+        .tag { position: absolute; top: 5px; left: 5px; background: rgba(0,0,0,0.8); color: #ffaa00; padding: 2px 6px; font-size: 9px; border-radius: 4px; font-weight: bold; }
+
+        /* Wheel of Fortune */
+        .wheel-container { text-align: center; padding: 20px 10px; background: #1c263b; border-radius: 8px; border: 1px solid #283754; }
+        .wheel-graphic { width: 120px; height: 120px; border-radius: 50%; border: 5px dashed #ffaa00; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; font-size: 40px; background: #232c45; }
+        
+        /* Buttons */
+        button { width: 100%; background: linear-gradient(180deg, #ffbb00, #ff9900); color: #000; border: none; padding: 14px; font-size: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 15px rgba(255,153,0,0.3); margin-top: 10px; }
+        .btn-withdraw { background: linear-gradient(180deg, #ff4d4d, #cc0000); color: #fff; box-shadow: 0 4px 15px rgba(204,0,0,0.3); margin-top: 15px; }
+
+        /* Scam Alert Modal */
+        .scam-box { display: none; background: #fff; color: #000; padding: 20px; border-radius: 12px; margin-top: 15px; border-left: 6px solid #ff4d4d; box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
+        .scam-box h4 { color: #cc0000; margin-bottom: 8px; font-size: 16px; }
+        .scam-box p { font-size: 14px; line-height: 1.5; color: #333; }
+        .step-num { background: #cc0000; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="vip-banner">💎 VIP DARALA: BRONZE (Yangi foydalanuvchi)</div>
+    <div class="header">
+        <div class="logo">🍀 FORTUNE WIN</div>
+        <div class="balance-badge" id="balDisplay">1 000 000 UZS</div>
+    </div>
+    <div class="bonus-info">🎁 Aktsiya: 1-depozitga +600% BONUS va 50 Free Spins (FS)!</div>
+
+    <!-- Tizim bo'limlari -->
+    <div class="tabs">
+        <div class="tab active" id="t1" onclick="switchTab('slots', 't1')">🎰 Slotlar</div>
+        <div class="tab" id="t2" onclick="switchTab('live', 't2')">🎥 Live Kazino</div>
+        <div class="tab" id="t3" onclick="switchTab('fast', 't3')">⚡ Tezkor</div>
+        <div class="tab" id="t4" onclick="switchTab('wheel', 't4')">🎡 Charxpalak</div>
+    </div>
+
+    <!-- SLOTLAR -->
+    <div id="slots" class="section active">
+        <div class="grid">
+            <div class="card" onclick="playGame('Gates of Olympus')"><span class="tag">Pragmatic</span><div class="card-img">⚡</div><div class="card-title">Gates of Olympus</div></div>
+            <div class="card" onclick="playGame('Sweet Bonanza')"><span class="tag">Pragmatic</span><div class="card-img">🍬</div><div class="card-title">Sweet Bonanza</div></div>
+        </div>
+    </div>
+
+    <!-- LIVE KAZINO -->
+    <div id="live" class="section">
+        <div class="grid">
+            <div class="card" onclick="playGame('Live Roulette')"><span class="tag">Evolution</span><div class="card-img">🔴</div><div class="card-title">Live Roulette</div></div>
+            <div class="card" onclick="playGame('Blackjack VIP')"><span class="tag">Evolution</span><div class="card-img">🃏</div><div class="card-title">Blackjack VIP</div></div>
+        </div>
+    </div>
+
+    <!-- TEZKOR O'YINLAR -->
+    <div id="fast" class="section">
+        <div class="grid">
+            <div class="card" onclick="playGame('Aviator (Klon)')"><span class="tag">Spribe</span><div class="card-img">🚀</div><div class="card-title">Aviator</div></div>
+            <div class="card" onclick="playGame('Mines')"><span class="tag">Hacksaw</span><div class="card-img">💣</div><div class="card-title">Mines</div></div>
+        </div>
+    </div>
+
+    <!-- CHARXPALAK (WHEEL OF FORTUNE) -->
+    <div id="wheel" class="section">
+        <div class="wheel-container">
+            <div class="wheel-graphic" id="wheelObj">🎯</div>
+            <p style="font-size: 13px; color: #8fa0c2; margin-bottom: 10px;">🎁 Har 24 soatda 1 marta bepul aylantirish imkoniyati!</p>
+            <button onclick="spinWheel()">🎡 BEPUL AYLANISH</button>
+        </div>
+    </div>
+
+    <!-- Pastki boshqaruv xizmati -->
+    <div style="padding: 0 15px 15px 15px;">
+        <button class="btn-withdraw" onclick="triggerScamFlow()">💰 BALANSDAGI PULNI YECHISH</button>
+        
+        <!-- Fosh qiluvchi interaktiv oyna -->
+        <div class="scam-box" id="scamBox">
+            <h4 id="scamTitle"><span class="step-num" id="stepLabel">1-bosqich</span> KYC Tekshiruvi tuzog'i</h4>
+            <p id="scamText"></p>
+            <button id="scamBtn" style="margin-top:12px; font-size:13px; padding:10px;"></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentBalance = 1000000; // 1 000 000 so'm boshlang'ich bonus
+    let scamStep = 0;
+
+    function switchTab(sectionId, tabId) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+        document.getElementById('scamBox').style.display = 'none';
+        scamStep = 0;
+    }
+
+    function playGame(gameName) {
+        let fakeWin = Math.floor(Math.random() * 15000000000) + 5000000000;
+        currentBalance += fakeWin;
+        document.getElementById('balDisplay').innerText = currentBalance.toLocaleString('uz-UZ') + " UZS";
+        alert("🎉 " + gameName + " o'yinida yutdingiz! +" + fakeWin.toLocaleString('uz-UZ') + " so'm!");
+    }
+
+    function spinWheel() {
+        let w = document.getElementById('wheelObj');
+        w.style.transform = "rotate(720deg)";
+        w.style.transition = "transform 2s ease-out";
+        setTimeout(() => {
+            let wheelWin = 25000000000;
+            currentBalance += wheelWin;
+            document.getElementById('balDisplay').innerText = currentBalance.toLocaleString('uz-UZ') + " UZS";
+            alert("🎯 Charxpalak omadingizni keltirdi! JEKPOT: +" + wheelWin.toLocaleString('uz-UZ') + " so'm!");
+            w.style.transform = "rotate(0deg)";
+            w.style.transition = "none";
+        }, 2000);
+    }
+
+    const flow = [
+        { label: "1-bosqich: KYC", title: "🛑 KYC Xavfsizlik to'lovi", text: "Sayt support xizmati balansdagi milliardlarni yechish uchun sizdan <b>356 000 so'm</b> depozit talab qiladi. Bu pul hech qayerga tushmaydi, to'g'ridan-to'g'ri firbgarning cho'ntagiga ketadi.", btn: "356 000 so'm o'tkazildi deb hisoblash (Keyingi tuzoq)" },
+        { label: "2-bosqich: Soliq", title: "📈 Xalqaro daromad solig'i", text: "Birinchi pulni olgach, ular sizni qo'yib yuborishmaydi. Endi yutuq katta bo'lgani uchun <b>14 000 000 so'm</b> (1% soliq) o'tkazishni so'rashadi.", btn: "Soliqni ham o'tkazdim deb hisoblash" },
+        { label: "3-bosqich: Yakun", title: "❌ Blok va pullarni o'g'irlash", text: "Siz pul to'lashni to'xtatganingizda yoki aldanganingizni bilganingizda, firbgarlar sizni <b>butunlay bloklab</b> tizimdan haydashadi. Ekrandagi barcha summalar shunchaki chizilgan animatsiya edi!", btn: "🔄 Simulyatsiyani qayta boshlash" }
+    ];
+
+    function triggerScamFlow() {
+        let box = document.getElementById('scamBox');
+        box.style.display = 'block';
+
+        if (scamStep >= flow.length) {
+            currentBalance = 1000000;
+            document.getElementById('balDisplay').innerText = currentBalance.toLocaleString('uz-UZ') + " UZS";
+            box.style.display = 'none';
